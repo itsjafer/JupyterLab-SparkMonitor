@@ -28,7 +28,7 @@ clean:
 
 .PHONY: lint
 lint: frontend-build
-	venv/bin/jlpm run lint
+	venv/bin/jlpm run eslint
 
 dist: build
 	rm -rf dist/

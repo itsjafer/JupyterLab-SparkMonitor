@@ -18,9 +18,7 @@ function fillData(element, item) {
     element.find('.data-stageid').text(data.stageId);
     element.find('.data-host').text(data.host);
     element.find('.data-executorid').text(data.executorId);
-    const status = $('<span></span>')
-        .addClass(data.status)
-        .text(data.status);
+    const status = $('<span></span>').addClass(data.status).text(data.status);
     element.find('.data-status').html(status);
     const start = $('<time></time>')
         .addClass('timeago')

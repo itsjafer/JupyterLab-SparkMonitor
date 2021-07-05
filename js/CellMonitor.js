@@ -195,9 +195,7 @@ export default class CellMonitor {
                             queue: false,
                             duration: 400,
                             complete: () => {
-                                $(this.cell.node)
-                                    .find('.headericon')
-                                    .addClass('headericoncollapsed');
+                                $(this.cell.node).find('.headericon').addClass('headericoncollapsed');
                                 element.find('.tabcontent').removeClass('tabcontentactive');
                                 element.find('.tabbutton').removeClass('tabbuttonactive');
                             },
@@ -252,9 +250,7 @@ export default class CellMonitor {
                 queue: false,
                 duration: 400,
                 complete: () => {
-                    $(this.cell.node)
-                        .find('.headericon')
-                        .removeClass('headericoncollapsed');
+                    $(this.cell.node).find('.headericon').removeClass('headericoncollapsed');
                 },
             });
         }
@@ -321,24 +317,15 @@ export default class CellMonitor {
             this.displayElement.find('.badgeexecutorcount').text(this.monitor.numExecutors);
             this.displayElement.find('.badgeexecutorcorescount').text(this.monitor.totalCores);
             if (this.numActiveJobs > 0) {
-                this.displayElement
-                    .find('.badgerunning')
-                    .show()
-                    .css('display', 'inline');
+                this.displayElement.find('.badgerunning').show().css('display', 'inline');
                 this.displayElement.find('.badgerunningcount').html(this.numActiveJobs);
             } else this.displayElement.find('.badgerunning').hide(500);
             if (this.numCompletedJobs > 0) {
-                this.displayElement
-                    .find('.badgecompleted')
-                    .show()
-                    .css('display', 'inline');
+                this.displayElement.find('.badgecompleted').show().css('display', 'inline');
                 this.displayElement.find('.badgecompletedcount').html(this.numCompletedJobs);
             } else this.displayElement.find('.badgecompleted').hide(500);
             if (this.numFailedJobs > 0) {
-                this.displayElement
-                    .find('.badgefailed')
-                    .show()
-                    .css('display', 'inline');
+                this.displayElement.find('.badgefailed').show().css('display', 'inline');
                 this.displayElement.find('.badgefailedcount').html(this.numFailedJobs);
             } else this.displayElement.find('.badgefailed').hide(500);
         }
@@ -387,17 +374,14 @@ export default class CellMonitor {
         );
         const tbody = $('<tbody></tbody>').addClass('jobtablebody');
 
-        Object.keys(this.jobData).forEach(jobId => {
+        Object.keys(this.jobData).forEach((jobId) => {
             const jobrow = CellMonitor.createJobItem();
             this.updateJobItem(jobrow, jobId, true);
             tbody.append(jobrow);
         });
         const table = $('<table/>').addClass('jobtable');
         table.append(thead, tbody);
-        this.displayElement
-            .find('.jobtablecontent')
-            .empty()
-            .append(table);
+        this.displayElement.find('.jobtablecontent').empty().append(table);
         if (!this.allcompleted) this.registerJobTableRefresher();
     }
 
@@ -408,28 +392,16 @@ export default class CellMonitor {
     static createStageItem() {
         const srow = $('<tr></tr>').addClass('stagerow');
         const tdstageid = $('<td></td>').addClass('tdstageid');
-        const tdstagename = $('<td></td>')
-            .text('Unknown')
-            .addClass('tdstagename');
-        const status = $('<span></span>')
-            .addClass('UNKNOWN')
-            .text('UNKNOWN');
-        const tdstatus = $('<td></td>')
-            .addClass('tdstagestatus')
-            .html(status);
+        const tdstagename = $('<td></td>').text('Unknown').addClass('tdstagename');
+        const status = $('<span></span>').addClass('UNKNOWN').text('UNKNOWN');
+        const tdstatus = $('<td></td>').addClass('tdstagestatus').html(status);
         const progress = $(
             `<div class="cssprogress">
                                 <div class="data"></div><span class="val1"></span><span class="val2"></span></div>`,
         ).addClass('tdstageitemprogress');
-        const tdtasks = $('<td></td>')
-            .addClass('tdstageprogress')
-            .append(progress);
-        const tdstarttime = $('<td></td>')
-            .text('Unknown')
-            .addClass('tdstagestarttime');
-        const tdduration = $('<td></td>')
-            .text('-')
-            .addClass('tdstageduration');
+        const tdtasks = $('<td></td>').addClass('tdstageprogress').append(progress);
+        const tdstarttime = $('<td></td>').text('Unknown').addClass('tdstagestarttime');
+        const tdduration = $('<td></td>').text('-').addClass('tdstageduration');
         srow.append(tdstageid, tdstagename, tdstatus, tdtasks, tdstarttime, tdduration);
         return srow;
     }
@@ -444,9 +416,7 @@ export default class CellMonitor {
         const data = this.stageData[stageId];
         if (data.modified || redraw) {
             this.stageData[stageId].modified = false;
-            const status = $('<span></span>')
-                .addClass(data.status)
-                .text(data.status);
+            const status = $('<span></span>').addClass(data.status).text(data.status);
             element.find('.tdstagestatus').html(status);
             element.find('.tdstageid').text(data.id);
             let val1 = 0;
@@ -471,10 +441,7 @@ export default class CellMonitor {
                     .attr('data-livestamp', data.start)
                     .attr('title', data.start.toString())
                     .text(data.start.toString());
-                element
-                    .find('.tdstagestarttime')
-                    .empty()
-                    .html(start);
+                element.find('.tdstagestarttime').empty().html(start);
             }
             if (data.start && data.end && data.status !== 'RUNNING') {
                 const duration = moment.duration(data.end.getTime() - data.start.getTime());
@@ -505,9 +472,7 @@ export default class CellMonitor {
         ).addClass('stagetable');
         // let stagetablebody = stagetable.find('tbody');
         fakerow.find('.stagedata').append(stagetable);
-        const tdbutton = $('<td></td>')
-            .addClass('tdstagebutton')
-            .html('<span class="tdstageicon"></span>');
+        const tdbutton = $('<td></td>').addClass('tdstagebutton').html('<span class="tdstageicon"></span>');
         const icon = tdbutton.find('.tdstageicon');
         tdbutton.click(() => {
             icon.toggleClass('tdstageiconcollapsed');
@@ -515,26 +480,17 @@ export default class CellMonitor {
         });
         const tdjobid = $('<td></td>').addClass('tdjobid');
         const tdjobname = $('<td></td>').addClass('tdjobname');
-        const status = $('<span></span>')
-            .addClass('pending')
-            .text('PENDING')
-            .addClass('tditemjobstatus');
-        const tdjobstatus = $('<td></td>')
-            .addClass('tdjobstatus')
-            .html(status);
+        const status = $('<span></span>').addClass('pending').text('PENDING').addClass('tditemjobstatus');
+        const tdjobstatus = $('<td></td>').addClass('tdjobstatus').html(status);
         const tdjobstages = $('<td></td>').addClass('tdjobstages');
         const jobprogress = $(
             `               <div class="cssprogress">
                             <div class="data"></div><span class="val1"></span><span class="val2"></span></div>`,
         ).addClass('tdjobitemprogress');
-        const tdjobtasks = $('<td></td>')
-            .addClass('tdtasks')
-            .append(jobprogress);
+        const tdjobtasks = $('<td></td>').addClass('tdtasks').append(jobprogress);
         const durationtext = '-';
         const tdjobtime = $('<td></td>').addClass('tdjobstarttime');
-        const tdjobduration = $('<td></td>')
-            .text(durationtext)
-            .addClass('tdjobduration');
+        const tdjobduration = $('<td></td>').text(durationtext).addClass('tdjobduration');
         const row = $('<tr></tr>').addClass('jobrow');
         row.append(tdbutton, tdjobid, tdjobname, tdjobstatus, tdjobstages, tdjobtasks, tdjobtime, tdjobduration);
         return row.add(fakerow);
@@ -551,7 +507,7 @@ export default class CellMonitor {
         if (data.modified || redraw) {
             this.jobData[jobId].modified = false;
             element.addClass(`jobrow${data.id}`);
-            data.stageIds.forEach(stageId => {
+            data.stageIds.forEach((stageId) => {
                 let srow = element.find(`.stagerow${stageId}`);
                 if (!srow.length) {
                     srow = CellMonitor.createStageItem().addClass(`stagerow${stageId}`);
@@ -569,19 +525,13 @@ export default class CellMonitor {
                 const text = `${data.numCompletedTasks}${
                     data.numActiveTasks > 0 ? ` + ${data.numActiveTasks} ` : ''
                 } / ${data.numTasks}`;
-                element
-                    .find('.tdjobitemprogress')
-                    .find('.data')
-                    .text(text);
+                element.find('.tdjobitemprogress').find('.data').text(text);
                 element.find('.tdjobitemprogress .val1').width(`${val1}%`);
                 element.find('.tdjobitemprogress .val2').width(`${val2}%`);
             }
             element.find('.tdjobid').text(data.id);
             element.find('.tdjobname').text(data.name);
-            const status = $('<span></span>')
-                .addClass(data.status)
-                .text(data.status)
-                .addClass('tditemjobstatus');
+            const status = $('<span></span>').addClass(data.status).text(data.status).addClass('tditemjobstatus');
             element.find('.tdjobstatus').html(status);
             element
                 .find('.tdjobstages')
@@ -609,7 +559,7 @@ export default class CellMonitor {
         if (this.view !== 'jobs') {
             throw new Error('SparkMonitor: Updating job table when view is not jobs');
         }
-        Object.keys(this.jobData).forEach(jobId => {
+        Object.keys(this.jobData).forEach((jobId) => {
             let jobrow = this.displayElement.find(`.jobtablecontent table tbody .jobrow${jobId}`);
             if (!jobrow.length) {
                 jobrow = CellMonitor.createJobItem();
@@ -644,10 +594,7 @@ export default class CellMonitor {
         this.numActiveJobs += 1;
         this.badgesmodified = true;
         this.appId = data.appId;
-        const name = $('<div>')
-            .text(data.name)
-            .html()
-            .split(' ')[0]; // Escaping HTML <, > from string
+        const name = $('<div>').text(data.name).html().split(' ')[0]; // Escaping HTML <, > from string
         this.jobData[data.jobId] = {
             id: data.jobId,
             start: new Date(data.submissionTime),
@@ -665,13 +612,10 @@ export default class CellMonitor {
             numSkippedStages: 0,
             modified: true,
         };
-        data.stageIds.forEach(stageid => {
+        data.stageIds.forEach((stageid) => {
             if (!this.stageIdtoJobId[stageid]) this.stageIdtoJobId[stageid] = [];
             this.stageIdtoJobId[stageid].push(data.jobId);
-            const stageName = $('<div>')
-                .text(data.stageInfos[stageid].name)
-                .html()
-                .split(' ')[0]; // Hack for escaping HTML <, > from string.
+            const stageName = $('<div>').text(data.stageInfos[stageid].name).html().split(' ')[0]; // Hack for escaping HTML <, > from string.
             this.stageData[stageid] = {
                 id: stageid,
                 status: 'PENDING',
@@ -699,7 +643,7 @@ export default class CellMonitor {
     /** Called when a Spark job ends. */
     onSparkJobEnd(data) {
         this.jobData[data.jobId].status = data.status;
-        this.jobData[data.jobId].stageIds.forEach(stageid => {
+        this.jobData[data.jobId].stageIds.forEach((stageid) => {
             if (this.stageData[stageid].status === 'PENDING') {
                 this.stageData[stageid].status = 'SKIPPED';
                 this.jobData[data.jobId].numSkippedStages += 1;
@@ -728,14 +672,11 @@ export default class CellMonitor {
 
     /** Called when a Spark stage is submitted. */
     onSparkStageSubmitted(data) {
-        const name = $('<div>')
-            .text(data.name)
-            .html()
-            .split(' ')[0]; // Hack for escaping HTML <, > from string.
+        const name = $('<div>').text(data.name).html().split(' ')[0]; // Hack for escaping HTML <, > from string.
         let submissionDate;
         if (data.submissionTime === -1) submissionDate = new Date();
         else submissionDate = new Date(data.submissionTime);
-        this.stageIdtoJobId[data.stageId].forEach(jobId => {
+        this.stageIdtoJobId[data.stageId].forEach((jobId) => {
             this.jobData[jobId].numActiveStages += 1;
             this.jobData[jobId].modified = true;
         });
@@ -750,7 +691,7 @@ export default class CellMonitor {
 
     /** Called when a Spark stage is completed. */
     onSparkStageCompleted(data) {
-        this.stageIdtoJobId[data.stageId].forEach(jobId => {
+        this.stageIdtoJobId[data.stageId].forEach((jobId) => {
             this.jobData[jobId].numActiveStages -= 1;
             this.jobData[jobId].modified = true;
             if (data.status === 'COMPLETED') {
@@ -773,7 +714,7 @@ export default class CellMonitor {
         this.stageData[data.stageId].firsttaskstart = new Date(data.launchTime);
         this.stageData[data.stageId].modified = true;
 
-        this.stageIdtoJobId[data.stageId].forEach(jobId => {
+        this.stageIdtoJobId[data.stageId].forEach((jobId) => {
             this.jobData[jobId].numActiveTasks += 1;
             this.jobData[jobId].modified = true;
         });
@@ -790,7 +731,7 @@ export default class CellMonitor {
         } else {
             this.stageData[data.stageId].numFailedTasks += 1;
         }
-        this.stageIdtoJobId[data.stageId].forEach(jobId => {
+        this.stageIdtoJobId[data.stageId].forEach((jobId) => {
             this.jobData[jobId].numActiveTasks -= 1;
             this.jobData[jobId].modified = true;
             if (data.status === 'SUCCESS') {

@@ -127,7 +127,7 @@ export default class SparkMonitor {
 
     /** Hide all displays. */
     hideAll() {
-        Object.keys(this.cellmonitors).forEach(id => {
+        Object.keys(this.cellmonitors).forEach((id) => {
             if (
                 Object.prototype.hasOwnProperty.call(this.cellmonitors, id) &&
                 this.cellmonitors[id].displayVisible === true
@@ -155,7 +155,7 @@ export default class SparkMonitor {
      */
 
     startComm(kernel) {
-        setTimeout(function() {
+        setTimeout(function () {
             console.log('waiting');
         }, 2000);
         console.log('SparkMonitor: Starting Comm with kernel.');
@@ -163,10 +163,10 @@ export default class SparkMonitor {
             this.comm =
                 'createComm' in kernel ? kernel.createComm('SparkMonitor') : kernel.connectToComm('SparkMonitor');
             this.comm.open({ msgtype: 'openfromfrontend' });
-            this.comm.onMsg = message => {
+            this.comm.onMsg = (message) => {
                 this.handleMessage(message);
             };
-            this.comm.onClose = message => {
+            this.comm.onClose = (message) => {
                 SparkMonitor.onCommClose(message);
             };
             console.log('SparkMonitor: Connection with comms established');

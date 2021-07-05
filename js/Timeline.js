@@ -138,19 +138,19 @@ export default class JobTimeline {
             this.timelineData1.flush();
             this.timelineData2.flush();
             this.timelineData3.flush();
-            this.runningItems1.forEach(item => {
+            this.runningItems1.forEach((item) => {
                 this.timelineData1.update({
                     id: item.id,
                     end: date,
                 });
             });
-            this.runningItems2.forEach(item => {
+            this.runningItems2.forEach((item) => {
                 this.timelineData2.update({
                     id: item.id,
                     end: date,
                 });
             });
-            this.runningItems3.forEach(item => {
+            this.runningItems3.forEach((item) => {
                 this.timelineData3.update({
                     id: item.id,
                     end: date,
@@ -263,7 +263,7 @@ export default class JobTimeline {
                 }
             });
             // Make dragging one timeline drag all timelines - ie jobs, stages and tasks should move together
-            this.timeline1.on('rangechange', properties => {
+            this.timeline1.on('rangechange', (properties) => {
                 if (properties.byUser)
                     this.timeline2.setWindow(properties.start, properties.end, {
                         animation: false,
@@ -273,7 +273,7 @@ export default class JobTimeline {
                         animation: false,
                     });
             });
-            this.timeline2.on('rangechange', properties => {
+            this.timeline2.on('rangechange', (properties) => {
                 if (properties.byUser)
                     this.timeline1.setWindow(properties.start, properties.end, {
                         animation: false,
@@ -283,7 +283,7 @@ export default class JobTimeline {
                         animation: false,
                     });
             });
-            this.timeline3.on('rangechange', properties => {
+            this.timeline3.on('rangechange', (properties) => {
                 if (properties.byUser)
                     this.timeline1.setWindow(properties.start, properties.end, {
                         animation: false,
@@ -299,7 +299,7 @@ export default class JobTimeline {
             const onuserclick = () => {
                 this.userdragged = true;
             };
-            const onuserdrag = data => {
+            const onuserdrag = (data) => {
                 if (data.byUser) this.userdragged = true;
             };
             this.timeline1.on('click', onuserclick);
@@ -310,25 +310,25 @@ export default class JobTimeline {
             this.timeline3.on('rangechanged', onuserdrag);
             // Display corresponding popups when clicking on a job/stage/task
             if (!this.cellmonitor.allcompleted) this.registerRefresher();
-            this.timeline3.on('select', properties => {
+            this.timeline3.on('select', (properties) => {
                 if (properties.items.length) {
                     taskUI.show(this.timelineData3.get(properties.items[0]));
                 }
             });
-            this.timeline1.on('select', properties => {
+            this.timeline1.on('select', (properties) => {
                 if (properties.items.length) {
                     const name = properties.items[0];
                     this.cellmonitor.openSparkUI(`jobs/job/?id=${name}`);
                 }
             });
-            this.timeline2.on('select', properties => {
+            this.timeline2.on('select', (properties) => {
                 if (properties.items.length) {
                     const name = properties.items[0];
                     this.cellmonitor.openSparkUI(`stages/stage/?id=${name}&attempt=0`);
                 }
             });
             setTimeout(() => {
-                this.timelineData1.forEach(item => {
+                this.timelineData1.forEach((item) => {
                     this.addLinetoTimeline(item.start, `${this.cellmonitor.appId}${item.id}start`, 'Job Started');
                     if (this.timelineData1.get(item.id).mode === 'done')
                         this.addLinetoTimeline(item.end, `${this.cellmonitor.appId}${item.id}end`, 'Job Ended');
@@ -378,10 +378,7 @@ export default class JobTimeline {
             '<rect class="serialization-time-proportion" x="60%" y="0px" height="100%" width="20%"></rect>' +
             '<rect class="getting-result-time-proportion" x="80%" y="0px" height="100%" width="20%"></rect>' +
             '</svg>';
-        const element = $('<div></div>')
-            .html(html)
-            .addClass('taskbardiv')
-            .attr('data-taskid', data.taskId);
+        const element = $('<div></div>').html(html).addClass('taskbardiv').attr('data-taskid', data.taskId);
         const { metrics } = data;
         const svg = element.find('.taskbarsvg');
         svg.find('.scheduler-delay-proportion')
@@ -419,10 +416,7 @@ export default class JobTimeline {
 
     /** Called when a Spark job starts. */
     onSparkJobStart(data) {
-        const name = $('<div>')
-            .text(data.name)
-            .html()
-            .split(' ')[0]; // Escaping HTML <, > from string
+        const name = $('<div>').text(data.name).html().split(' ')[0]; // Escaping HTML <, > from string
         this.timelineData1.update({
             id: data.jobId,
             start: new Date(data.submissionTime),
@@ -455,10 +449,7 @@ export default class JobTimeline {
 
     /** Called when a Spark stage is submitted. */
     onSparkStageSubmitted(data) {
-        const name = $('<div>')
-            .text(data.name)
-            .html()
-            .split(' ')[0]; // Hack for escaping HTML <, > from string.
+        const name = $('<div>').text(data.name).html().split(' ')[0]; // Hack for escaping HTML <, > from string.
         let submissionDate;
         if (data.submissionTime === -1) submissionDate = new Date();
         else submissionDate = new Date(data.submissionTime);

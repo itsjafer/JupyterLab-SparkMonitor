@@ -1,6 +1,6 @@
 {
   "name": "jupyterlab-sparkmonitor",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Jupyter Lab extension to monitor Apache Spark Jobs",
   "repository": {
     "type": "git",
@@ -19,7 +19,10 @@
     "email": "krishnanr1997@gmail.com"
   },
   "maintainers": [
-    {"name": "itsjafer", "email": "itsjafer@gmail.com"}
+    {
+      "name": "itsjafer",
+      "email": "itsjafer@gmail.com"
+    }
   ],
   "license": "Apache-2.0",
   "bugs": {
@@ -73,6 +76,7 @@
   },
   "dependencies": {
     "@jupyterlab/application": "^3.0.4",
+    "@jupyterlab/apputils": "^3.0.7",
     "@jupyterlab/cells": "^3.0.4",
     "@jupyterlab/coreutils": "^5.0.2",
     "@jupyterlab/docregistry": "^3.0.4",
